@@ -1,4 +1,5 @@
 import re
+import spacy
 from rapidfuzz import fuzz
 from spacy.matcher import PhraseMatcher
 from spacy.tokens import Span, Doc

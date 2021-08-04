@@ -19,11 +19,5 @@
 
         pip install -r requirements.txt
 
-4. Download a spanish base model (we recommend the large one)
-
-        python -m spacy download es_core_news_lg
-
 ## Using it!
 
-        Open a console and run the command
-                `python [function you want to use] [parameters for that function]`
