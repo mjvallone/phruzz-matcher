@@ -1,14 +1,13 @@
-import re
 import spacy
-from rapidfuzz import fuzz
 from spacy.matcher import PhraseMatcher
 from spacy.tokens import Span, Doc
 from spacy.util import filter_spans
 from spacy.language import Language
+import fuzzy_matcher from utils
 MATCH_PERCENTAGE = 92
 
 
-nlp = spacy.blank('es')
+nlp = spacy.blank('es') #FIXME debería recibir un modelo
 
 class PhruzzMatcher:
     name = "phruzz_matcher"
@@ -43,23 +42,3 @@ class PhruzzMatcher:
             doc.ents = filter_spans([Span(doc, start, end, label=self.entity_label)] + list(doc.ents))
 
         return doc
-
-
-def fuzzy_matcher(features, tokens, match=None):
-    matches = []
-    for feature in features:
-        feature_length = len(feature.split(" "))
-        for i in range(len(tokens) - feature_length + 1):
-            matched_phrase = ""
-            j = 0
-            for j in range(i, i + feature_length):
-                if re.search(r"[,!?{}\[\]]", tokens[j]):
-                    break
-                matched_phrase = matched_phrase + " " + tokens[j].lower()
-            matched_phrase.strip()
-            if not matched_phrase == "":
-
-                if fuzz.ratio(matched_phrase, feature.lower()) > match:
-                    matches.append([matched_phrase, feature, i, j])
-
-    return matches[0] if len(matches) else matches
