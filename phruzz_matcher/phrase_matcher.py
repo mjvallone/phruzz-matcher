@@ -1,4 +1,3 @@
-# import spacy
 import re
 
 from spacy.matcher import PhraseMatcher
@@ -8,9 +7,6 @@ from spacy.language import Language
 from rapidfuzz import fuzz
 
 MATCH_PERCENTAGE = 92
-
-
-# nlp = spacy.blank('es') #FIXME eliminar una vez probado que recibe un modelo
 
 def fuzzy_matcher(features, tokens, match=None):
     matches = []
