@@ -4,10 +4,10 @@ from spacy.tokens import Span, Doc
 from spacy.util import filter_spans
 from spacy.language import Language
 import fuzzy_matcher from utils
-MATCH_PERCENTAGE = 92
+MATCH_PERCENTAGE = 92 #TODO deberia recibir match_percentage
 
 
-nlp = spacy.blank('es') #FIXME debería recibir un modelo
+nlp = spacy.blank('es') #FIXME eliminar una vez probado que recibe un modelo
 
 class PhruzzMatcher:
     name = "phruzz_matcher"
