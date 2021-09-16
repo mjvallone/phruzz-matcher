@@ -3,7 +3,7 @@ from spacy.matcher import PhraseMatcher
 from spacy.tokens import Span, Doc
 from spacy.util import filter_spans
 from spacy.language import Language
-import fuzzy_matcher from utils
+from utils import fuzzy_matcher
 MATCH_PERCENTAGE = 92 #TODO deberia recibir match_percentage
 
 
