@@ -71,7 +71,7 @@ def phrase_matcher(nlp: Language, name: str):
 nlp = spacy.blank("es")
 nlp.add_pipe("phrase_matcher")
 
-doc = nlp("El otro día fui a un bar donde vi a Brad Pitt y a Demi Moore, estaban tomando unas birras lo más bien")
+doc = nlp("El otro día fui a un bar donde vi a brad pit y a Demi Moore, estaban tomando unas cervezas mientras charlaban de sus asuntos.")
 print(f"doc.ents: {doc.ents}")
-#doc.ents: (Brad Pitt, Demi Moore)
+#doc.ents: (brad pit, Demi Moore)
 ```
