@@ -20,8 +20,8 @@ def fuzzy_matcher(features, tokens, match=None):
                     break
                 matched_phrase = matched_phrase + " " + tokens[j].lower()
             matched_phrase.strip()
-            if not matched_phrase == "":
 
+            if not matched_phrase == "":
                 if fuzz.ratio(matched_phrase, feature.lower()) > match:
                     matches.append([matched_phrase, feature, i, j])
 
@@ -42,23 +42,21 @@ class PhruzzMatcher:
     def __call__(self, doc: Doc) -> Doc:
         matches = self.matcher(doc)
 
-        if matches:
+        for match in matches:
             # using PhraseMatcher from Spacy
-            match = matches[0]
             start = match[-2]
             end = match[-1]
-        else:
-            # using RapidFuzz to find matches when there were NO "perfect matches" due to typos or abreviations
-            # consider that MATCH_PERCENTAGE is the percentage from the one you will keep matches between
-            # what is written in the text and the list of phrases
-            # higher the percentage, lower the differences "tolerated" to find a match
-            tokens = [token.text for token in doc]
-            match = fuzzy_matcher(self.phrases_list, tokens, self.match_percentage)
-            if match:
-                start = match[-2]
-                end = match[-1] + 1
-
+            doc.ents = filter_spans([Span(doc, start, end, label=self.entity_label)] + list(doc.ents))
+        
+        # using RapidFuzz to find matches when there were NO "perfect matches" due to typos or abreviations
+        # consider that MATCH_PERCENTAGE is the percentage from the one you will keep matches between
+        # what is written in the text and the list of phrases
+        # higher the percentage, lower the differences "tolerated" to find a match
+        tokens = [token.text for token in doc]
+        match = fuzzy_matcher(self.phrases_list, tokens, self.match_percentage)
         if match:
+            start = match[-2]
+            end = match[-1] + 1
             doc.ents = filter_spans([Span(doc, start, end, label=self.entity_label)] + list(doc.ents))
 
         return doc
